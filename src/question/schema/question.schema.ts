@@ -1,7 +1,8 @@
-// src/question/question.schema.ts
+// question.schema.ts
 
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { Answer } from '../../answer/schema/answer.schema';
 
 @Schema()
 export class Question extends Document {
@@ -11,8 +12,9 @@ export class Question extends Document {
   @Prop()
   description: string;
 
-  @Prop({ type: Schema.Types.ObjectId, ref: 'Company' })
-  company: string;
+  @Prop({ type: [{ type: Schema.Types.ObjectId, ref: 'Answer' }] })
+  answers: Answer[]; // Reference to related answers
 }
 
 export const QuestionSchema = SchemaFactory.createForClass(Question);
+
